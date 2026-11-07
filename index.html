@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101827" />
+  <meta name="description" content="Mainkan Tic Tac Toe bersama teman atau tantang bot dengan tiga tingkat kesulitan." />
+  <title>Tic Tac Toe — Main Bareng atau Lawan Bot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="module" src="./js/main.js"></script>
+</head>
+<body>
+  <div class="page-glow page-glow--one" aria-hidden="true"></div>
+  <div class="page-glow page-glow--two" aria-hidden="true"></div>
+
+  <main class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Tic Tac Toe, halaman utama">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="brand-name">grid<span>play</span></span>
+      </a>
+      <span class="header-chip"><span class="status-dot"></span> GAME ON</span>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">THINK · MARK · WIN</p>
+      <h1 id="page-title">Satu grid.<br /><span>Banyak strategi.</span></h1>
+      <p class="intro-copy">Uji strategi kamu. Ajak teman bermain atau tantang bot dengan tiga tingkat kesulitan.</p>
+    </section>
+
+    <section class="game-layout" aria-label="Permainan Tic Tac Toe">
+      <div class="game-card">
+        <div class="game-controls">
+          <div class="control-group">
+            <span class="control-label" id="mode-label">MODE PERMAINAN</span>
+            <div class="segmented-control" role="group" aria-labelledby="mode-label">
+              <button class="segment" id="mode-local" type="button" aria-pressed="false">Dua pemain</button>
+              <button class="segment is-active" id="mode-bot" type="button" aria-pressed="true">Lawan bot</button>
+            </div>
+          </div>
+          <label class="difficulty-control" for="difficulty-select" id="difficulty-wrap">
+            <span class="control-label">KESULITAN BOT</span>
+            <span class="select-wrap">
+              <select id="difficulty-select" aria-label="Pilih tingkat kesulitan bot">
+                <option value="easy">Mudah</option>
+                <option value="medium" selected>Menengah</option>
+                <option value="hard">Sulit</option>
+              </select>
+              <span class="select-chevron" aria-hidden="true">⌄</span>
+            </span>
+          </label>
+        </div>
+
+        <div class="score-strip" aria-label="Statistik pertandingan">
+          <div class="score-item score-item--x">
+            <span class="score-symbol">×</span>
+            <span class="score-meta"><span class="score-name" id="x-player-name">Kamu</span><strong id="x-score">0</strong></span>
+          </div>
+          <div class="score-item score-item--draw">
+            <span class="score-meta"><span class="score-name">Seri</span><strong id="draw-score">0</strong></span>
+          </div>
+          <div class="score-item score-item--o">
+            <span class="score-symbol">○</span>
+            <span class="score-meta"><span class="score-name" id="o-player-name">Bot</span><strong id="o-score">0</strong></span>
+          </div>
+        </div>
+
+        <div class="board-heading">
+          <div>
+            <span class="control-label">PAPAN PERMAINAN</span>
+            <p class="turn-message" id="turn-message" aria-live="polite">Giliran kamu</p>
+          </div>
+          <span class="turn-indicator" id="turn-indicator"><span class="indicator-symbol">×</span> GILIRAN X</span>
+        </div>
+
+        <div class="board" id="board" role="group" aria-label="Papan Tic Tac Toe">
+          <button class="cell" type="button" data-index="0" aria-label="Kotak 1, kosong"></button>
+          <button class="cell" type="button" data-index="1" aria-label="Kotak 2, kosong"></button>
+          <button class="cell" type="button" data-index="2" aria-label="Kotak 3, kosong"></button>
+          <button class="cell" type="button" data-index="3" aria-label="Kotak 4, kosong"></button>
+          <button class="cell" type="button" data-index="4" aria-label="Kotak 5, kosong"></button>
+          <button class="cell" type="button" data-index="5" aria-label="Kotak 6, kosong"></button>
+          <button class="cell" type="button" data-index="6" aria-label="Kotak 7, kosong"></button>
+          <button class="cell" type="button" data-index="7" aria-label="Kotak 8, kosong"></button>
+          <button class="cell" type="button" data-index="8" aria-label="Kotak 9, kosong"></button>
+        </div>
+
+        <div class="game-actions">
+          <button class="primary-button" id="reset-button" type="button"><span aria-hidden="true">↻</span> Mulai ulang</button>
+          <button class="text-button" id="clear-stats-button" type="button">Reset skor</button>
+        </div>
+        <p class="keyboard-hint">Pilih kotak kosong untuk menempatkan tanda kamu.</p>
+      </div>
+
+      <aside class="side-column">
+        <div class="info-card strategy-card">
+          <div class="card-icon" aria-hidden="true">✳</div>
+          <p class="card-kicker">CARA BERMAIN</p>
+          <h2>Tiga tanda<br />untuk menang.</h2>
+          <p class="card-description">Susun tiga tanda yang sama secara horizontal, vertikal, atau diagonal sebelum lawan melakukannya.</p>
+          <div class="mini-pattern" aria-hidden="true">
+            <span class="mini-x">×</span><span></span><span class="mini-o">○</span>
+            <span></span><span class="mini-x">×</span><span></span>
+            <span class="mini-o">○</span><span></span><span class="mini-x">×</span>
+          </div>
+        </div>
+
+        <div class="info-card tip-card">
+          <div class="tip-icon" aria-hidden="true">⌁</div>
+          <div>
+            <p class="card-kicker">TIPS STRATEGI</p>
+            <p class="tip-copy">Kuasai kotak tengah dan sudut. Dua posisi ini membuka lebih banyak peluang membuat garis kemenangan.</p>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="result-panel" id="result-panel" hidden aria-live="polite" aria-labelledby="result-title">
+      <div class="result-header">
+        <div>
+          <p class="eyebrow">PERTANDINGAN SELESAI</p>
+          <h2 id="result-title">Hasil permainan</h2>
+          <p class="result-description" id="result-description"></p>
+        </div>
+        <span class="result-badge" id="result-badge">SELESAI</span>
+      </div>
+      <div class="share-content">
+        <div class="share-preview-wrap">
+          <img id="share-preview" alt="Pratinjau gambar hasil pertandingan Tic Tac Toe" />
+        </div>
+        <div class="share-details">
+          <p class="share-title">Bagikan hasilmu</p>
+          <p class="share-copy">Simpan gambar papan dan hasil pertandingan, lalu bagikan kepada teman.</p>
+          <div class="share-actions">
+            <button class="primary-button share-button" id="share-button" type="button"><span aria-hidden="true">↗</span> Bagikan</button>
+            <button class="secondary-button" id="download-button" type="button"><span aria-hidden="true">↓</span> Unduh gambar</button>
+            <button class="text-button copy-button" id="copy-result-button" type="button">Salin ringkasan</button>
+          </div>
+          <p class="share-feedback" id="share-feedback" role="status"></p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <span>GRIDPLAY <span class="footer-separator">/</span> TIC TAC TOE</span>
+      <span>Dibuat untuk dimainkan, bukan ditebak.</span>
+    </footer>
+  </main>
+</body>
+</html>
